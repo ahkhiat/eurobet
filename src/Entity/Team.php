@@ -24,12 +24,24 @@ class Team
     /**
      * @var Collection<int, Matches>
      */
-    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'homeTeam')]
-    private Collection $matches;
+    #[ORM\OneToMany(mappedBy: 'homeTeam', targetEntity: Matches::class)]
+    private Collection $homeMatches;
+
+    #[ORM\OneToMany(mappedBy: 'awayTeam', targetEntity: Matches::class)]
+    private Collection $awayMatches;
+
+    #[ORM\Column(length: 255)]
+    private ?string $illustration = null;
 
     public function __construct()
     {
-        $this->matches = new ArrayCollection();
+        $this->homeMatches = new ArrayCollection();
+        $this->awayMatches = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->teamName;
     }
 
     public function getId(): ?int
@@ -64,9 +76,16 @@ class Team
     /**
      * @return Collection<int, Matches>
      */
-    public function getMatches(): Collection
+
+
+    public function getHomeMatches(): Collection
     {
-        return $this->matches;
+        return $this->homeMatches;
+    }
+
+    public function getAwayMatches(): Collection
+    {
+        return $this->awayMatches;
     }
 
     public function addMatch(Matches $match): static
@@ -87,6 +106,18 @@ class Team
                 $match->setHomeTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(string $illustration): static
+    {
+        $this->illustration = $illustration;
 
         return $this;
     }

@@ -14,9 +14,6 @@ class Bet
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $betType = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $BetPlacedAt = null;
 
@@ -29,21 +26,15 @@ class Bet
     #[ORM\ManyToOne(inversedBy: 'bets')]
     private ?Matches $matches = null;
 
+    #[ORM\Column]
+    private ?int $homeScore = null;
+
+    #[ORM\Column]
+    private ?int $awayScore = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBetType(): ?string
-    {
-        return $this->betType;
-    }
-
-    public function setBetType(string $betType): static
-    {
-        $this->betType = $betType;
-
-        return $this;
     }
 
     public function getBetPlacedAt(): ?\DateTimeInterface
@@ -90,6 +81,30 @@ class Bet
     public function setMatches(?Matches $matches): static
     {
         $this->matches = $matches;
+
+        return $this;
+    }
+
+    public function getHomeScore(): ?int
+    {
+        return $this->homeScore;
+    }
+
+    public function setHomeScore(int $homeScore): static
+    {
+        $this->homeScore = $homeScore;
+
+        return $this;
+    }
+
+    public function getAwayScore(): ?int
+    {
+        return $this->awayScore;
+    }
+
+    public function setAwayScore(int $awayScore): static
+    {
+        $this->awayScore = $awayScore;
 
         return $this;
     }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container my-5">
+    <h1>Espace membre</h1>    
+
+    <div class="row">
+        <div class="col-md-3">
+            {% include 'account/_menu.html.twig' %}
+        </div>
+        <div class="col-md-9">
+
+            <h5>Mes paris</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Date du match</th>
+                    <th scope="col">Date du pronostic</th>
+                    <th scope="col">Equipe domicile</th>
+                    <th scope="col">Equipe extérieure</th>
+                    <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bet in bets %}
+                    <tr>
+                    <td>{{ bet.matches.matchDate|date('d/m/Y') }}</td>
+                    <td>{{ bet.betPlacedAt|date('d/m/Y') }}</td>
+                    <td>{{ bet.matches.homeTeam }}</td>
+                    <td>{{ bet.matches.awayTeam }}</td>
+                    <td>{{ bet.homeScore }} - {{ bet.awayScore }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

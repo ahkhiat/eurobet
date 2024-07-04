@@ -19,20 +19,20 @@ class Matches
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $matchDate = null;
 
-    #[ORM\Column]
-    private ?int $homeScore = null;
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    private ?int $homeScore = 0;
 
-    #[ORM\Column]
-    private ?int $awayScore = null;
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    private ?int $awayScore = 0;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(length: 255, options: ["default" => "scheduled"])]
+    private ?string $status = 'scheduled';
 
-    #[ORM\ManyToOne(inversedBy: 'matches')]
+    #[ORM\ManyToOne(inversedBy: 'homeMatches')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $homeTeam = null;
 
-    #[ORM\ManyToOne(inversedBy: 'matches')]
+    #[ORM\ManyToOne(inversedBy: 'awayMatches')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $awayTeam = null;
 
@@ -153,4 +153,16 @@ class Matches
 
         return $this;
     }
+
+    public function getBetByUser(User $user): ?Bet
+    {
+        foreach ($this->bets as $bet) {
+            if ($bet->getUser() === $user) {
+                return $bet;
+            }
+        }
+
+        return null;
+    }
+    
 }

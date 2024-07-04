@@ -4,7 +4,45 @@
 
 <div class="container my-5">
     <h1>Calendrier</h1>
-    
+        <div class="col-md-9">
+            <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Date</th>
+
+                    <th scope="col" colspan="2" class="text-center">Equipe domicile</th>
+                    
+                    <th scope="col" colspan="2" class="text-center">Equipe extérieure</th>
+                    
+                    <th scope="col">Score</th>
+                    <th scope="col">Status</th>
+                    {% if app.user %}
+                        <th scope="col">Mon pronostic</th>
+                    {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match in matches %}
+                        <tr>
+                        <td>{{ match.matchdate | date('d/m/Y')}}</td>
+
+                        <td>{{ match.homeTeam.teamName }} </td>
+                        <td><img src="/uploads/{{ match.homeTeam.illustration }}" class="img-fluid img-thumbnail-round" alt="{{ match.homeTeam.teamName }}"></td>
+                        
+                        <td><img src="/uploads/{{ match.awayTeam.illustration }}" class="img-fluid img-thumbnail-round" alt="{{ match.awayTeam.teamName }}"></td>
+                        <td>{{ match.awayTeam.teamName }} </td>
+                        <td>{{ match.homeScore }} - {{ match.awayScore }}</td>
+                        <td>{{ match.status|status }}</td>
+                        {% if app.user %}
+                            <td><a href="{{ path('app_new_bet', {homeTeam: match.homeTeam, awayTeam: match.awayTeam, matchId: match.id}) }}">Prono</a></th>
+                        {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
 </div>
 
 {% endblock %}

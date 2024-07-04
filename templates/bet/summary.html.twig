@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{dump(bet)}}
+<div class="container my-5"></div>
+    <h1>Récapitulatif du pari</h1>
+    <p>Match: {{ bet.matches.homeTeam.teamName }} vs {{ bet.matches.awayTeam.teamName }}</p>
+    <p>Score : {{ bet.homeScore }} - {{ bet.awayScore }} </p>
+    
+{% endblock %}
