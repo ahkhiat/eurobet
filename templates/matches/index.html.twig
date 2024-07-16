@@ -6,7 +6,7 @@
     <h1>Calendrier</h1>
         <div class="col-md-9">
             <div class="table-responsive">
-            <table class="table table-bordered">
+            {# <table class="table table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">Date</th>
@@ -40,9 +40,51 @@
                         </tr>
                     {% endfor %}
                 </tbody>
-            </table>
+            </table> #}
             </div>
         </div>
+
+
+<div class="col-md-9">
+    <div class="table-responsive">
+    <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+
+                        <th scope="col" colspan="2" class="text-center">Equipe domicile</th>
+                        
+                        <th scope="col" colspan="2" class="text-center">Equipe extérieure</th>
+                        <th>Lieu</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Arbitre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for match in matchesLeague %}
+                        <tr>
+                        <td>{{ match.fixture.date | date('d/m/Y')}}</td>
+
+                        <td>{{ match.teams.home.name }} </td>
+                        <td><img src="https://media.api-sports.io/football/teams/{{ match.teams.home.id }}.png" class="img-fluid img-thumbnail-round" ></td>
+                        
+                        <td><img src="https://media.api-sports.io/football/teams/{{ match.teams.away.id }}.png" class="img-fluid img-thumbnail-round" ></td>
+                        <td>{{ match.teams.away.name }} </td>
+
+                        <td>{{ match.fixture.venue.name }} </td>
+                        <td>{{ match.score.fulltime.home }} - {{ match.score.fulltime.home }}</td>
+                        <td>{{ match.fixture.referee }}</td>
+                       
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            </div>
+
 </div>
+
+
+{{dump(matchesLeague)}}
 
 {% endblock %}
